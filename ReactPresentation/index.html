@@ -25,32 +25,38 @@
 
         <!--Below is all React -->
         <script type="text/babel">
-          // Note Container
+          // Note class (Container)
         	var Note = React.createClass({
 				getInitialState(){
 					return {editing: false}
 				},
+				//lifecycle methods 
 				componentWillMount(){
 					this.style = {
 						right: this.randomBetween(0, window.innerWidth - 150, 'px'),
 						top: this.randomBetween(0, window.innerHeight - 150, 'px')
 					}
 				},
+				//lifecycle methods
 				componentDidUpdate(){
 					if(this.state.editing){
 						this.refs.newText.focus()
 						this.refs.newText.select()
 					}
 				},
+				//lifecycle methods
 				shouldComponentUpdate(nextProps, nextState){
 					return this.props.children !== nextProps.children || this.state !== nextState
 				},
+				// used to give a random number between x and y (we are going to pass s as just 'px')
 				randomBetween(x,y,s){
 					return (x + Math.ceil(Math.random()* (y-x))) +s
 				},
+				//sets editing as true
 				edit(){
 					this.setState({editing: true})
 				},
+				//sets editing as false
 				save(){
 					this.props.onChange(this.refs.newText.value, this.props.id)
 					this.setState({editing:false})
@@ -58,6 +64,8 @@
 				remove(){
 					this.props.onClick(this.props.id)
 				},
+				//we are going to call this in the case that you are editing the note
+				//you will be able to see the text in a <textarea> element, change it, and save it 
 				renderForm(){
 					return(
 						<div className="note"
@@ -68,6 +76,8 @@
 						</div>
 					)
 				},
+				//we are going to call this in the case that you are not editing the note 
+				//it will show the text and the buttons to edit or remove the note
 				renderDisplay(){
 					return (
 					<div className="note"
@@ -80,19 +90,21 @@
 					</div>
 					)
 				},
-
+				//The render() method is required.
 				render(){
 					return (<ReactDraggable>
-							{(this.state.editing)? this.renderForm(): this.renderDisplay()}
+							{//same thing as saying if editing is true renderForm else renderDisplay
+							(this.state.editing)? this.renderForm(): this.renderDisplay()}
 							</ReactDraggable>)
               // the reason why we added react draggable in the <head> and why you are able
               // to drag the notes on the page
 				}
 
 			})
-
+		//board class (Component)
         	var Board = React.createClass({
         		propTypes:{
+				//checks to see if the prop passed was a number or below 100
         			count: function(props, propName){
         				if(typeof props[propName] !== "number"){
         					return new Error("the count must be a number")
@@ -107,6 +119,7 @@
         				notes:[]
         			}
         		},
+			//lifecycle methods
         		componentWillMount(){
         			if(this.props.count){
         				var url = `http://baconipsum.com/api/?type=all-meat&sentences=${this.props.count}`
