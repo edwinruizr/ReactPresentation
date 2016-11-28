@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://fb.me/react-15.2.1.js"></script>
-        <script src="https://fb.me/react-dom-15.2.1.js"></script>
+      <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+      <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
         <!--//Babel is a transpiler that will transpile JavaScript code.
         //It works for JSX, and it also works for ES6 and beyond.
         //So, instead of having to wait around to use syntax that's brand new,
@@ -21,6 +21,7 @@
         <title>Board with Notes (React Project)</title>
     </head>
     <body>
+      <!-- This is the container in which we are going to put everything (Borad and Notes)-->
         <div id='react-container'></div>
 
         <!--Below is all React -->
@@ -30,7 +31,7 @@
 				getInitialState(){
 					return {editing: false}
 				},
-				//lifecycle methods 
+				//lifecycle methods
 				componentWillMount(){
 					this.style = {
 						right: this.randomBetween(0, window.innerWidth - 150, 'px'),
@@ -65,7 +66,7 @@
 					this.props.onClick(this.props.id)
 				},
 				//we are going to call this in the case that you are editing the note
-				//you will be able to see the text in a <textarea> element, change it, and save it 
+				//you will be able to see the text in a <textarea> element, change it, and save it
 				renderForm(){
 					return(
 						<div className="note"
@@ -76,7 +77,7 @@
 						</div>
 					)
 				},
-				//we are going to call this in the case that you are not editing the note 
+				//we are going to call this in the case that you are not editing the note
 				//it will show the text and the buttons to edit or remove the note
 				renderDisplay(){
 					return (
@@ -134,10 +135,12 @@
         					})
         			}
         		},
+            //function that returns a uniqueId (integer) or 0 if it's the first one
         		nextId(){
         			this.uniqueId= this.uniqueId || 0
         			return this.uniqueId ++
         		},
+            //adds text to the note
         		add(text){
         			var notes = [
         				...this.state.notes,
@@ -183,7 +186,7 @@
           //here you can change the number and that will be the number of notes
           //when initiated
           //it is called a prop
-        ReactDOM.render(<Board count={50}/>, document.getElementById('react-container'))
+        ReactDOM.render(<Board count={5}/>, document.getElementById('react-container'))
 
         </script>
     </body>
